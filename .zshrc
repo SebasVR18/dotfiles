@@ -138,3 +138,5 @@ export PATH="$HOME/.local/bin:$PATH"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 neofetch
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
