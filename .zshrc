@@ -130,6 +130,8 @@ alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
 alias zshrc='nvim ~/.zshrc'
 
+alias projects='ls ~/U/Projects/ | fzf | xargs -I% code ~/U/Projects/%'
+
 export PATH="$HOME/.local/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
