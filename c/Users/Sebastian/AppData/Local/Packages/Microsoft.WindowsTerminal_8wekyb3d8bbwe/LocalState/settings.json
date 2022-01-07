@@ -32,6 +32,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+    "focusFollowMouse": true,
     "profiles": 
     {
         "defaults": {},
@@ -53,10 +54,11 @@
                 "acrylicOpacity": 0.94999999999999996,
                 "bellStyle": "none",
                 "colorScheme": "Campbell",
+                "commandline": "wsl.exe -d Ubuntu",
                 "experimental.retroTerminalEffect": false,
                 "font": 
                 {
-                    "face": "FuraCode NF Retina"
+                    "face": "FiraCode NF Retina"
                 },
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
                 "hidden": false,
@@ -284,5 +286,6 @@
         }
     ],
     "showTabsInTitlebar": true,
-    "showTerminalTitleInTitlebar": true
+    "showTerminalTitleInTitlebar": true,
+    "startOnUserLogin": false
 }

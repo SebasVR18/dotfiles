@@ -132,11 +132,17 @@ alias zshrc='nvim ~/.zshrc'
 
 alias projects='ls ~/U/Projects/ | fzf | xargs -I% code ~/U/Projects/%'
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:/snap/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-neofetch
+# export DISPLAY="$(/sbin/ip route | awk '/default/ { print $3 }'):0"
+#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+#export LIBGL_ALWAYS_INDIRECT=1
+#sudo /etc/init.d/dbus start &> /dev/null
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# neofetch
+
