@@ -78,15 +78,15 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	zsh-autosuggestions
-	git
-	sudo
-	aws
-	command-not-found
-	docker-compose
-	pip
-	ubuntu
-	vscode
+        zsh-autosuggestions
+        git
+        sudo
+        aws
+        command-not-found
+        docker-compose
+        pip
+        ubuntu
+        vscode
 )
 source $ZSH/oh-my-zsh.sh
 
@@ -98,11 +98,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nano'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -126,11 +126,22 @@ alias l='lsd --group-dirs=first'
 alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
 alias zshrc='nvim ~/.zshrc'
-alias exe='explorer.exe .'
+alias py='python3'
+
+if [[ $(< /proc/sys/kernel/hostname) == "Gallifrey" ]]; then
+  alias ssh='TERM=xterm-256color ssh'
+  eval $(thefuck --alias)
+else
+  export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
+  alias exe='explorer.exe .'
+fi
 
 export PATH="$HOME/gems/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
-export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
 export GEM_HOME="$HOME/gems"
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
