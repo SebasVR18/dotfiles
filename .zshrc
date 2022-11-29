@@ -129,14 +129,14 @@ alias zshrc='nvim ~/.zshrc'
 alias py='python3'
 
 if [[ $(< /proc/sys/kernel/hostname) == "Gallifrey" ]]; then
-  alias ssh='TERM=xterm-256color ssh'
+  [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
   eval $(thefuck --alias)
 else
   export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
   alias exe='explorer.exe .'
 fi
 
-export PATH="$HOME/gems/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/gems/bin:$HOME/.local/bin:$HOME/.npm-global/bin:/snap/bin:$PATH"
 export GEM_HOME="$HOME/gems"
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -145,3 +145,13 @@ eval "$(pyenv init -)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/sebas/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sebas/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/sebas/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sebas/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
