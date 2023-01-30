@@ -1,28 +1,20 @@
-###
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-#installation via script from github
-#export ZSH="/home/$USER/.oh-my-zsh"
-#installation via paru -S oh-my-zsh-git
-export ZSH=/usr/share/oh-my-zsh/
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# if you installed the package oh-my-zsh-powerline-theme-git then you type here "powerline" as zsh theme
 ZSH_THEME="juanghurtado"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
-
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# ZSH_THEME_RANDOM_IGNORED=(pygmalion tjkirch_mod)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -31,17 +23,16 @@ ZSH_THEME="juanghurtado"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -53,6 +44,9 @@ ZSH_THEME="juanghurtado"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -72,8 +66,8 @@ ZSH_THEME="juanghurtado"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
@@ -88,9 +82,7 @@ plugins=(
         vscode
 )
 
-if [ -f $ZSH/oh-my-zsh.sh ]; then
-  source $ZSH/oh-my-zsh.sh
-fi
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -109,38 +101,10 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-
-####   ARCOLINUX SETTINGS   ####
-export PAGER='most'
-
-if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-setopt GLOB_DOTS
-#share commands between terminal instances or not
-unsetopt SHARE_HISTORY
-#setopt SHARE_HISTORY
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-export HISTCONTROL=ignoreboth:erasedups
-
-# Make nano the default editor
-
-export EDITOR='nano'
-export VISUAL='nano'
-
-#PS1='[\u@\h \W]\$ '
-
-if [ -d "$HOME/.bin" ] ;
-  then PATH="$HOME/.bin:$PATH"
-fi
-
-if [ -d "$HOME/.local/bin" ] ;
-  then PATH="$HOME/.local/bin:$PATH"
-fi
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
 
 ### ALIASES ###
 
@@ -183,11 +147,6 @@ alias upall="paru -Syu --noconfirm"
 #ps
 alias psa="ps auxf"
 alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
-
-#grub update
-alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-#grub issue 08/2022
-alias install-grub-efi="sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi"
 
 #add new fonts
 alias update-fc='sudo fc-cache -fv'
@@ -233,26 +192,6 @@ alias vbm="sudo /usr/local/bin/arcolinux-vbox-share"
 alias start-vmware="sudo systemctl enable --now vmtoolsd.service"
 alias vmware-start="sudo systemctl enable --now vmtoolsd.service"
 alias sv="sudo systemctl enable --now vmtoolsd.service"
-
-#Recent Installed Packages
-alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
-alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
-
-#iso and version used to install ArcoLinux
-alias iso="cat /etc/dev-rel | awk -F '=' '/ISO/ {print $2}'"
-alias isoo="cat /etc/dev-rel"
-
-#Cleanup orphaned packages
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
-
-#clear
-alias clean="clear; seq 1 $(tput cols) | sort -R | sparklines | lolcat"
-
-#search content with ripgrep
-alias rg="rg --sort path"
-
-#get the error messages from journalctl
-alias jctl="journalctl -p 3 -xb"
 
 #nano for important configuration files
 #know what you do in these files
@@ -327,9 +266,9 @@ ex ()
 alias rmgitcache="rm -r ~/.cache/git"
 
 #personal
-alias cat="/bin/bat"
+alias cat="/bin/batcat"
 alias catn="/bin/cat"
-alias catnl="/bin/bat --paging=never"
+alias catnl="/bin/batcat --paging=never"
 alias ll='lsd -lh --group-dirs=first'
 alias la='lsd -a --group-dirs=first'
 alias l='lsd --group-dirs=first'
@@ -337,12 +276,13 @@ alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
 alias zshrc='nvim ~/.zshrc'
 alias py='python3'
+alias vsc='code .'
+alias exe='explorer.exe .'
 
 if [[ $(< /proc/sys/kernel/hostname) == "Gallifrey" ]]; then
-  [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
+  #[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 else
-  export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
-  alias exe='explorer.exe .'
+  #export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
 fi
 
 export PATH="$HOME/gems/bin:$HOME/.local/bin:$HOME/.npm-global/bin:/snap/bin:$PATH"
@@ -352,8 +292,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+source /home/sebas/Downloads/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Added by Amplify CLI binary installer
 export PATH="$HOME/.amplify/bin:$PATH"
@@ -363,16 +305,3 @@ export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk/lib/server/
 
 # reporting tools - install when not installed
 neofetch
-#screenfetch
-#alsi
-#paleofetch
-#fetch
-#hfetch
-#sfetch
-#ufetch
-#ufetch-arco
-#pfetch
-#sysinfo
-#sysinfo-retro
-#cpufetch
-#colorscript random
