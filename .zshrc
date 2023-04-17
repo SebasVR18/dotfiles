@@ -71,15 +71,15 @@ ZSH_THEME="juanghurtado"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-        zsh-autosuggestions
-        git
-        sudo
-        aws
-        command-not-found
-        docker-compose
-        pip
-        ubuntu
-        vscode
+  zsh-autosuggestions
+  git
+  sudo
+  aws
+  command-not-found
+  docker-compose
+  pip
+  ubuntu
+  vscode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -105,6 +105,38 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
+
+####   ARCOLINUX SETTINGS   ####
+export PAGER='most'
+
+if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+setopt GLOB_DOTS
+#share commands between terminal instances or not
+unsetopt SHARE_HISTORY
+#setopt SHARE_HISTORY
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+export HISTCONTROL=ignoreboth:erasedups
+
+# Make nano the default editor
+
+export EDITOR='nano'
+export VISUAL='nano'
+
+#PS1='[\u@\h \W]\$ '
+
+if [ -d "$HOME/.bin" ] ;
+  then PATH="$HOME/.bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ] ;
+  then PATH="$HOME/.local/bin:$PATH"
+fi
 
 ### ALIASES ###
 
@@ -266,9 +298,9 @@ ex ()
 alias rmgitcache="rm -r ~/.cache/git"
 
 #personal
-alias cat="/bin/batcat"
+alias cat="/bin/bat"
 alias catn="/bin/cat"
-alias catnl="/bin/batcat --paging=never"
+alias catnl="/bin/bat --paging=never"
 alias ll='lsd -lh --group-dirs=first'
 alias la='lsd -a --group-dirs=first'
 alias l='lsd --group-dirs=first'
@@ -277,13 +309,10 @@ alias ls='lsd --group-dirs=first'
 alias zshrc='nvim ~/.zshrc'
 alias py='python3'
 alias vsc='code .'
-alias exe='explorer.exe .'
+alias sd='sam build -cp && sam deploy'
 
-if [[ $(< /proc/sys/kernel/hostname) == "Gallifrey" ]]; then
-  #[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
-else
-  #export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
-fi
+[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
+
 
 export PATH="$HOME/gems/bin:$HOME/.local/bin:$HOME/.npm-global/bin:/snap/bin:$PATH"
 export GEM_HOME="$HOME/gems"
@@ -293,6 +322,7 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 source /home/sebas/Downloads/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -305,3 +335,17 @@ export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk/lib/server/
 
 # reporting tools - install when not installed
 neofetch
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/sebas/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sebas/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/sebas/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sebas/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+source "$HOME/.cargo/env"
+source /usr/share/nvm/init-nvm.sh
