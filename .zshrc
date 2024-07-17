@@ -15,7 +15,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -85,16 +85,12 @@ plugins=(
   aws
   command-not-found
   docker-compose
-  # dotenv
   dnf
   docker
   python
   pip
-  # pipenv
-  pyenv
   vscode
 )
-
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,18 +119,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme
-source /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /home/linuxbrew/.linuxbrew/share/zsh-autopair/autopair.zsh
-source /home/linuxbrew/.linuxbrew/share/zsh-you-should-use/you-should-use.plugin.zsh
 
-if type brew &>/dev/null; then
-    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-    autoload -Uz compinit
-    compinit
-fi
+[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ## Colorize the grep command output for ease of use (good for log files)##
 alias grep='grep --color=auto'
@@ -185,35 +177,41 @@ alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
 alias zshrc='nvim ~/.zshrc'
 alias py='python3'
-alias vsc='code .'
+alias vsc='code --ozone-platform-hint=auto .'
 alias sd='sam build -cp && sam deploy'
 
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 
+# pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/shims:$HOME/gems/bin:$HOME/.local/bin:$HOME/.npm-global/bin:/snap/bin:$PATH:$HOME/.dotnet/tools"
-export GEM_HOME="$HOME/gems"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+export PATH=$HOME/.local/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completio
 
-neofetch
+# bun completions
+[ -s "/home/sebas/.bun/_bun" ] && source "/home/sebas/.bun/_bun"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/sebas/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sebas/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/sebas/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sebas/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="$HOME/development/flutter3.7.12/bin:/usr/local/android-studio/bin:~/.console-ninja/.bin:$PATH"
 
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+export PATH="~/.console-ninja/.bin:$PATH"
 
-[[ -f ~/.cargo/env ]] && source "$HOME/.cargo/env"
-[[ -f /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-eval "$(pyenv init -)"
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+export PATH="$PATH:$HOME/.puro/bin" # Added by Puro
+export PATH="$PATH:$HOME/.puro/shared/pub_cache/bin" # Added by Puro
+export PATH="$PATH:$HOME/.puro/envs/default/flutter/bin" # Added by Puro
+export PURO_ROOT="/home/sebas/.puro" # Added by Puro
+export PUB_CACHE="/home/sebas/.puro/shared/pub_cache" # Added by Puro
 
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+PATH=~/.console-ninja/.bin:$PATH
