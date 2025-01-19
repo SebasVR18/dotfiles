@@ -186,7 +186,7 @@ alias sd='sam build -cp && sam deploy'
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
@@ -214,4 +214,4 @@ export PATH="$PATH:$HOME/.puro/envs/default/flutter/bin" # Added by Puro
 export PURO_ROOT="/home/sebas/.puro" # Added by Puro
 export PUB_CACHE="/home/sebas/.puro/shared/pub_cache" # Added by Puro
 
-PATH=~/.console-ninja/.bin:$PATH
+export PATH=~/.console-ninja/.bin:$PATH
